@@ -18,11 +18,11 @@ From ISO boot to fully functional and configure work station in under **5 minute
 
 ### Why Config_End_Point?
 
-**Fast deployment:** From the normal manual setup to an automated install.\n
-**Reproducible:** Same environment every time.
-**Security focus:** Build with malware analysis in mind.
-**Minimal bloat:** Only reverse engineering tools, no unnecessary packages.
-**Modular:** Ansible roles for easy customization.
+- **Fast deployment:** From the normal manual setup to an automated install.
+- **Reproducible:** Same environment every time.
+- **Security focus:** Build with malware analysis in mind.
+- **Minimal bloat:** Only reverse engineering tools, no unnecessary packages.
+- **Modular:** Ansible roles for easy customization.
 
 ----
 
