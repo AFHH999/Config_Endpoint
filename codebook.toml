@@ -1,4 +1,5 @@
 words = [
+	"Ansible",
 	"listchanges",
 	"umask",
 	"fs.protected_fifos",
