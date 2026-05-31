@@ -9,9 +9,15 @@
     state: present
   when: ansible_os_family == "Archlinux"
 
+- name: check if pynvim is installed
+  ansible.builtin.command: pipx-list
+  register: pipx_list
+  change_when: false
+  become: true
+  become_user: "{{ ansible_env.SUDO_USER | default(ansible_user_id) }}"
+
 - name: Install pynvim
-  ansible.builtin.command:
-    cmd: pipx install pynvim
-    creates: ~/.local/bin/pynvim-python
+  ansible.builtin.command: pipx install pynvim
+  when: "'pynvim' not in pipx_list.stdout"
   become: true
   become_user: "{{ ansible_env.SUDO_USER | default(ansible_user_id) }}"
