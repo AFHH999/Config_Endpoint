@@ -1,0 +1,42 @@
+- name: Installing i3 packages
+  vars:
+  required_packages:
+  - i3-vm
+  - i3status
+  - i3lock
+
+  aur_packages:
+  - dunst
+  - rofi
+  - feh
+  - mpv
+  - picom
+  - nemo
+  - cinnamon-translations
+  - network-manager-applet
+  - xss-lock ttf-fira-code
+  - nerd-fonts-fira-code
+  - brightnessctl
+  - alsa
+  - polkit
+  - polkit-gnome
+  - python-pynvim
+  - blueman 
+  - acpi
+  - pulseaudio
+
+- name: Install Official packages
+  pacman:
+  name: "{{ required_packages }}"
+  state: present
+  when: ansible_os_family == "Arch"
+
+- name: Install AUR packages with yay
+  kewlfft.aur.aur: 
+    name: "{{ aur_packages }}"
+    use: yay
+    state: present
+  become: true
+  become_user: aur_builder
+
+

@@ -1,0 +1,8 @@
+- name: Install system dependencies
+  ansible.builtin.include_tasks: prerequisites.yaml
+
+- name: Get cargo
+  ansible.builtin.include_tasks: downloads.yaml
+
+- name: Get the configurations for the programs
+  ansible.builtin.include_tasks: configure.yaml

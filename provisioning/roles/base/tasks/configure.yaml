@@ -1,0 +1,15 @@
+- name: Download the dotfiles repo
+  ansible.builtin.git:
+    repo: 'https://github.com/AFHH999/Dotfiles'
+    dest: "{{ ansible_env.HOME }}/Dotfiles"
+    version: main
+    update: true
+  become_user: "{{ ansible_user_id }}"
+  when: ansible_os_family == "Archlinux"
+
+- name: stow the config dotfiles
+  command: stow */
+  args:
+    chdir: "{{ ansible_env.HOME }}/Dotfiles"
+  become_user: "{{ ansible_user_id }}"
+  when: ansible_os_family == "Archlinux"

@@ -1,0 +1,9 @@
+- name: Basic set up
+  hosts: all
+  become: true
+  gather_facts: true
+
+  roles:
+    - base
+    - desktop_env
+    - security_tools
