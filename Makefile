@@ -1,24 +1,25 @@
-PLAYBOOK = playbook.yaml
-INVENTORY = inventory.ini
+ANSIBLE_DIR = provisioning
+PLAYBOOK = $(ANSIBLE_DIR)/playbook.yaml
+INVENTORY = $(ANSIBLE_DIR)/inventory.ini
 
 .PHONY: all base desktop security check lint install-deps
 
 all: base desktop security
 
 base:
-	ansible-playbook -i $(INVENTORY) $(PLAYBOOK) --tags base
+	cd $(ANSIBLE_DIR) && ansible-playbook playbook.yaml --tags base
 
 desktop:
-	ansible-playbook -i $(INVENTORY) $(PLAYBOOK) --tags desktop
+	cd $(ANSIBLE_DIR) && ansible-playbook playbook.yaml --tags desktop
 
 security:
-	ansible-playbook -i $(INVENTORY) $(PLAYBOOK) --tags security
+	cd $(ANSIBLE_DIR) && ansible-playbook playbook.yaml --tags security
 
 check:
-	ansible-playbook -i $(INVENTORY) $(PLAYBOOK) --check --dif
+	cd $(ANSIBLE_DIR) && ansible-playbook playbook.yaml --check --diff
 
 lint:
-	ansible-lint $(PLAYBOOK)
+	cd $(ANSIBLE_DIR) && ansible-lint playbook.yaml
 
 install-deps:
 	ansible-galaxy collection install community.general kewlfft.aur
