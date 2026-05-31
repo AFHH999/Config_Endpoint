@@ -10,7 +10,7 @@
   when: ansible_os_family == "Archlinux"
 
 - name: Install pynvim
-  ansible_builtin_command:
+  ansible.builtin.command:
     cmd: pipx install pynvim
     creates: ~/.local/bin/pynvim-python
   become: true

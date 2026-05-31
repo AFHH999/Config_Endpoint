@@ -1,0 +1,11 @@
+- name: Provision Arch linux
+  hosts: local
+  become: true
+
+  roles:
+    - role: base
+      tags: base
+    - role: desktop_env
+      tags: desktop
+    - role: security_tools
+      tags: security
