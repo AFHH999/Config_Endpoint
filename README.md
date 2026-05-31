@@ -46,7 +46,7 @@ From ISO boot to fully functional and configure work station in under **5 minute
 | **rofi** | Application launcher |
 | **dunst** | Notification daemon |
 | **picom** | Compositor for transparency/shadows |
-| **kitty** | GPU-accelerated terminal |
+| **ghostty** | GPU-accelerated terminal |
 
 ### Reverse Engineering Tools
 

@@ -8,7 +8,7 @@
   when: ansible_os_family == "Archlinux"
 
 - name: stow the config dotfiles
-  command: stow */
+  ansible.builtin.shell: stow */
   args:
     chdir: "{{ ansible_env.HOME }}/Dotfiles"
   become_user: "{{ ansible_user_id }}"
