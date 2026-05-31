@@ -1,10 +1,10 @@
 - name: Update pacman cache
   ansible.builtin.package:
-  update_cache: true
+    update_cache: true
   when: ansible_os_family == "Archlinux"
 
 - name: Install Official packages in Arch
   community.general.pacman:
-  name: "{{ required_packages }}"
-  state: present
-  when: ansible_os_family == "Arch"
+    name: "{{ required_packages }}"
+    state: present
+  when: ansible_os_family == "Archlinux"

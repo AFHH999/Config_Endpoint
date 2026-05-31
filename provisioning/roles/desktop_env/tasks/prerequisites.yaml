@@ -1,11 +1,11 @@
 - name: Install Official packages
-  pacman:
-  name: "{{ required_packages }}"
-  state: present
+  community.general.pacman:
+    name: "{{ required_packages }}"
+    state: present
   when: ansible_os_family == "Archlinux"
 
 - name: Install AUR packages with yay
-  kewlfft.aur.aur: 
+  kewlfft.aur.aur:
     name: "{{ aur_packages }}"
     use: yay
     state: present

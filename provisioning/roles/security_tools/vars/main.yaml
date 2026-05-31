@@ -10,7 +10,7 @@ required_packages:
   - valgrind
   - python-pip
   - checksec
-  - nasam
+  - nasm
   - yasm
   - wireshark-qt
   - tcpdump
