@@ -1,6 +1,5 @@
 - name: Provision Arch linux
   hosts: local
-  become: true
 
   roles:
     - role: base
