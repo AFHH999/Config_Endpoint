@@ -2,44 +2,16 @@
   ansible.builtin.package:
     update_cache: true
   when: ansible_os_family == "Archlinux"
-  vars:
-    required_packages:
-      - man-db
-      - man-pages
-      - base
-      - base-devel
-      - git
-      - wget
-      - btop
-      - ttf-jetbrains-mono-nerd
-      - python
-      - python-pipx
-      - nautilus
-      - neovim
-      - ghostty
-      - tmux
-      - jq
-      - zoxide
-      - pacman-contrib
-      - rofi
-      - atuin
-      - yazi
-      - zsh
-      - zsh-completions
-      - fzf
-      - bat
-      - fastfetch
-      - fd
-      - stow
 
 - name: Install Official packages in Arch
   community.general.pacman:
-  name: "{{ required_packages }}"
-  state: present
+    name: "{{ required_packages }}"
+    state: present
   when: ansible_os_family == "Archlinux"
 
 - name: Install pynvim
   ansible_builtin_command:
     cmd: pipx install pynvim
     creates: ~/.local/bin/pynvim-python
+  become: true
   become_user: "{{ ansible_env.SUDO_USER | default(ansible_user_id) }}"

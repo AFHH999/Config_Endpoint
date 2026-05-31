@@ -1,0 +1,22 @@
+required_packages:
+  - gdb
+  - gef
+  - ghidra
+  - radare2
+  - binwalk
+  - python-pwntools
+  - strace
+  - ltrace
+  - valgrind
+  - python-pip
+  - checksec
+  - nasam
+  - yasm
+  - wireshark-qt
+  - tcpdump
+  - lldb
+  - python-pycryptodomex
+  - python-requests
+  - upx
+  - binutils
+
