@@ -4,7 +4,7 @@
     dest: "{{ ansible_env.HOME }}"
     version: main
     update: true
-  become_user: "{{ ansible_user_id }}"
+  become_user: "{{ ansible_user_id }}/i3"
   when: ansible_os_family == "Archlinux"
 
 - name: Give execution permision to the script

@@ -1,0 +1,2 @@
+- name: Get the security tools
+  ansible.builtin.include_tasks: download.yaml

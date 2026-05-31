@@ -1,32 +1,32 @@
 - name: Update pacman cache
   ansible.builtin.package:
   update_cache: true
-  when: ansible_os_family == "Arch"  
+  when: ansible_os_family == "Archlinux"
   vars:
-  required_packages:
-    - gdb
-    - gef
-    - ghidra
-    - radare2
-    - binwalk
-    - python-pwntools
-    - strace
-    - ltrace
-    - valgrind
-    - python-pip
-    - checksec
-    - nasam
-    - yasm
-    - wireshark-qt
-    - tcpdump
-    - lldb
-    - python-pycryptodomex
-    - python-requests
-    - upx
-    - binutils
+    required_packages:
+      - gdb
+      - gef
+      - ghidra
+      - radare2
+      - binwalk
+      - python-pwntools
+      - strace
+      - ltrace
+      - valgrind
+      - python-pip
+      - checksec
+      - nasam
+      - yasm
+      - wireshark-qt
+      - tcpdump
+      - lldb
+      - python-pycryptodomex
+      - python-requests
+      - upx
+      - binutils
 
 - name: Install Official packages in Arch
-  pacman:
+  community.general.pacman:
   name: "{{ required_packages }}"
   state: present
   when: ansible_os_family == "Arch"

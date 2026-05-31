@@ -1,29 +1,30 @@
 - name: Installing i3 packages
   vars:
-  required_packages:
-  - i3-vm
-  - i3status
-  - i3lock
+    required_packages:
+    - i3-wm
+    - i3status
+    - i3lock
 
-  aur_packages:
-  - dunst
-  - rofi
-  - feh
-  - mpv
-  - picom
-  - nemo
-  - cinnamon-translations
-  - network-manager-applet
-  - xss-lock ttf-fira-code
-  - nerd-fonts-fira-code
-  - brightnessctl
-  - alsa
-  - polkit
-  - polkit-gnome
-  - python-pynvim
-  - blueman 
-  - acpi
-  - pulseaudio
+    aur_packages:
+    - dunst
+    - rofi
+    - feh
+    - mpv
+    - picom
+    - nemo
+    - cinnamon-translations
+    - network-manager-applet
+    - xss-lock
+    - ttf-fira-code
+    - nerd-fonts-fira-code
+    - brightnessctl
+    - alsa
+    - polkit
+    - polkit-gnome
+    - python-pynvim
+    - blueman 
+    - acpi
+    - pulseaudio
 
 - name: Install Official packages
   pacman:

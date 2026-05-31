@@ -1,5 +1,5 @@
 - name: Install necessary packages
-  ansible.builtin.include_task: prerequisites.yaml
+  ansible.builtin.include_tasks: prerequisites.yaml
 
 - name: Get the configurations for the programs
   ansible.builtin.include_tasks: configure.yaml
