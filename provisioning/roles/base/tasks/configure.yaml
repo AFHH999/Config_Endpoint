@@ -1,3 +1,10 @@
+- name: Download oh-my-zsh
+  ansible.builtin.shell: |
+    set -e
+    wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | CHSH=no RUSZSH=no sh
+  args:
+    creates: "{{ ansible_env.HOME }}/.oh-my-zsh"
+
 - name: Download the dotfiles repo
   ansible.builtin.git:
     repo: 'https://github.com/AFHH999/Dotfiles'
@@ -15,12 +22,17 @@
     mode: '0755'
   when: ansible_os_family == "Archlinux"
 
+- name: Remove the stock .zshrc file
+  ansible.builtin.file: 
+    path: "{{ ansible_env.HOME }}/.zshrc"
+    state: absent
+
 - name: stow the config dotfiles
   ansible.builtin.shell: |
     set -e
     for pkg in */; do
         if [ -d "$pkg" ] && [ "$pkg" != ".git/" ]; then 
-        stow -v "${pkg%/}"
+        stow -v -t "${pkg%/}"
       fi
     done
   args:
@@ -28,3 +40,7 @@
     executable: /bin/bash
   become_user: "{{ ansible_user_id }}"
   when: ansible_os_family == "Archlinux"
+
+- name: set zsh as default shell
+  ansible.builtin.shell: "chsh -s $(which zsh) {{ ansible_user_id }}"
+  become: true
