@@ -1,12 +1,14 @@
 - name: Update pacman cache if stale
-  ansible.builtin.package:
+  community.general.pacman:
     update_cache: true
+  become: true
   when: ansible_os_family == "Archlinux"
 
 - name: Install Official packages in Arch
   community.general.pacman:
     name: "{{ required_packages }}"
     state: present
+  become: true
   when: ansible_os_family == "Archlinux"
 
 - name: check if pynvim is installed
