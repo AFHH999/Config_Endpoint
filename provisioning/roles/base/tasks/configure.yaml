@@ -20,12 +20,11 @@
     set -e
     for pkg in */; do
         if [ -d "$pkg" ] && [ "$pkg" != ".git/" ]; then 
-        stow -v -t "{{ ansible_env.HOME }}/.config" "${pkg%/}"
+        stow -v "${pkg%/}"
       fi
     done
   args:
     chdir: "{{ ansible_env.HOME }}/Dotfiles"
     executable: /bin/bash
-  become: true
   become_user: "{{ ansible_user_id }}"
   when: ansible_os_family == "Archlinux"
