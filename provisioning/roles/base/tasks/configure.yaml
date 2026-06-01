@@ -25,16 +25,17 @@
   when: ansible_os_family == "Archlinux"
 
 - name: Remove the stock .zshrc file
-  ansible.builtin.file: 
+  ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.zshrc"
     state: absent
 
 - name: Stow the config dotfiles
   ansible.builtin.shell: |
     set -e
+    set
     for pkg in */; do
-        if [ -d "$pkg" ] && [ "$pkg" != ".git/" ]; then 
-        stow -v -t "${pkg%/}"
+      if [ -d "$pkg" ] && [ "$pkg" != ".git/" ]; then
+      stow -v -t "${pkg%/}"
       fi
     done
   args:
@@ -43,7 +44,9 @@
   become: true
   become_user: "{{ ansible_user_id }}"
   when: ansible_os_family == "Archlinux"
+  changed_when: false
 
 - name: Set zsh as default shell
-  ansible.builtin.shell: "chsh -s $(which zsh) {{ ansible_user_id }}"
-  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    shell: /usr/bin/zsh

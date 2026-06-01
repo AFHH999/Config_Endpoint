@@ -16,16 +16,14 @@
 
 - name: Install Official packages
   community.general.pacman:
-    name: "{{ required_packages }}"
+    name: "{{ desktop_env_required_packages }}"
     state: present
   when: ansible_os_family == "Archlinux"
 
 - name: Install AUR packages with yay
   kewlfft.aur.aur:
-    name: "{{ aur_packages }}"
+    name: "{{ desktop_env_aur_packages }}"
     use: yay
     state: present
   become: true
   become_user: aur_builder
-
-

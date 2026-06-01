@@ -1,4 +1,4 @@
-required_packages:
+security_tools_required_packages:
   - gdb
   - gef
   - ghidra

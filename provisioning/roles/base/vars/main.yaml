@@ -1,4 +1,4 @@
-required_packages:
+base_required_packages:
   - man-db
   - man-pages
   - base
