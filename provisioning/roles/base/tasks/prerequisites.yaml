@@ -11,7 +11,7 @@
   become: true
   when: ansible_os_family == "Archlinux"
 
-- name: check if pynvim is installed
+- name: Check if pynvim is installed
   ansible.builtin.command: pipx list
   register: pipx_list
   changed_when: false

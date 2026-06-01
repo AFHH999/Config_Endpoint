@@ -5,6 +5,7 @@
     version: main
     update: true
   become_user: "{{ ansible_user_id }}"
+  become: true
   when: ansible_os_family == "Archlinux"
 
 - name: Give execution permision to the script
@@ -12,13 +13,15 @@
     path: "{{ ansible_env.HOME }}/i3/install.sh"
     mode: '0755'
     state: file
+  become: true
   become_user: "{{ ansible_user_id }}"
   when: ansible_os_family == "Archlinux"
 
 - name: Run the install script for the i3 repo and create a mark
-  command: ./install.sh && touch exists_already.txt
+  ansible.builtin.shell: ./install.sh && touch exists_already.txt
   args:
     chdir: "{{ ansible_env.HOME }}/i3"
     creates: "{{ ansible_env.HOME }}/i3/exists_already.txt"
     mode: '0755'
   become_user: "{{ ansible_user_id }}"
+  become: true

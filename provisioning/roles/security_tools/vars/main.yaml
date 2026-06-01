@@ -19,4 +19,3 @@ required_packages:
   - python-requests
   - upx
   - binutils
-
