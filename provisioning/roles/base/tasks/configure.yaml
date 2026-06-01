@@ -1,7 +1,7 @@
 - name: Download the dotfiles repo
   ansible.builtin.git:
     repo: 'https://github.com/AFHH999/Dotfiles'
-    dest: " {{ ansible_env.HOME }}/Dotfiles "
+    dest: "{{ ansible_env.HOME }}/Dotfiles"
     version: main
     update: true
     force: true
