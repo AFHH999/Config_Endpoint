@@ -11,7 +11,7 @@
     line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
     create: true
     mode: '0440'
-    validate: /usr/sbin/visudo/ -cf %s
+    validate: /usr/sbin/visudo -cf %s
   become: true
 
 - name: Install Official packages
@@ -19,6 +19,29 @@
     name: "{{ desktop_env_required_packages }}"
     state: present
   when: ansible_os_family == "Archlinux"
+
+- name: Check if yay is installed
+  ansible.builtin.command: which yay
+  register: desktop_env_yay_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Clone the github repo yay
+  ansible.builtin.git:
+    repo: 'https://aur.archlinux.org/yay-bin.git'
+    dest: /tmp/yay-bin
+    version: master
+  become: true
+  become_user: aur_builder
+  when: desktop_env_yay_check.rc != 0
+
+- name: Compile yay via makepkg
+  ansible.builtin.command:
+    cmd: makepkg -si --noconfirm
+    chdir: /tmp/yay-bin
+    creates: /usr/bin/yay
+  become: true
+  become_user: aur_builder
 
 - name: Install AUR packages with yay
   kewlfft.aur.aur:
