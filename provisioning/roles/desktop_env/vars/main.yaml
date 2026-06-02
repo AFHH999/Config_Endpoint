@@ -22,4 +22,3 @@ desktop_env_aur_packages:
   - python-pynvim
   - blueman
   - acpi
-  - pulseaudio

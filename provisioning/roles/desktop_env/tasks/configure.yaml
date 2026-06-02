@@ -22,6 +22,6 @@
   args:
     chdir: "{{ ansible_env.HOME }}/i3"
     creates: "{{ ansible_env.HOME }}/i3/exists_already.txt"
-    mode: '0755'
   become_user: "{{ ansible_user_id }}"
   become: true
+  changed_when: true
