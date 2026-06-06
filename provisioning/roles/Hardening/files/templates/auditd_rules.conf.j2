@@ -1,0 +1,46 @@
+# Self-auditing
+-w /var/log/audit/ -p wra -k auditlog
+-w /etc/audit/ -p wa -k auditconfig
+
+# Kernel & modules
+-w /etc/sysctl.conf -p wa -k sysctl
+-w /etc/sysctl.d -p wa -k sysctl
+-a always,exit -F arch=b64 -S finit_module -S init_module -S delete_module -F auid!=unset -k modules
+-w /etc/modprobe.d -p wa -k modprobe
+
+# Privilege escalation surface
+-w /etc/sudoers -p wa -k actions
+-w /etc/sudoers.d/ -p wa -k actions
+-w /etc/pam.d/ -p wa -k pam
+-w /etc/security/ -p wa -k pam
+
+# Identity files
+-w /etc/passwd -p wa -k etcpasswd
+-w /etc/shadow -p wa -k etcpasswd
+-w /etc/group -p wa -k etcgroup
+
+# SSH
+-w /etc/ssh/ -p wa -k sshd
+-w /root/.ssh -p wa -k rootkey
+
+# Systemd
+-w /etc/systemd/ -p wa -k systemd
+-w /usr/lib/systemd -p wa -k systemd
+
+# AppArmor
+-w /etc/apparmor/ -p wa -k mac_policy
+-w /etc/apparmor.d/ -p wa -k mac_policy
+
+# Network config
+-w /etc/hosts -p wa -k network_modifications
+-w /etc/resolv.conf -p wa -k network_modifications
+-w /etc/nftables.conf -p wa -k firewall
+
+# Permission changes
+-a always,exit -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=unset -k perm_mod
+-a always,exit -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=unset -k perm_mod
+
+# High value attack techniques
+-a always,exit -F arch=b64 -S ptrace -k tracing
+-a always,exit -F arch=b64 -S memfd_create -F key=anon_file_create
+-a always,exit -F arch=b64 -S bpf -k bpf

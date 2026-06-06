@@ -1,0 +1,11 @@
+- name: Dissable unused network protocols
+  copy:
+    dest: /etc/modprobe.d/disable-protocols.conf
+    owner: root
+    group: root
+    mode: '0644'
+    content: |
+      install dccp /bin/false
+      install sctp /bin/false
+      install rds /bin/false
+      install tipc /bin/false

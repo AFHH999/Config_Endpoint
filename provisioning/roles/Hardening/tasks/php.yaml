@@ -1,0 +1,16 @@
+- name: Hardening php
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: php censor info
+      ansible.builtin.lineinfile:
+        path: /etc/php/php.ini
+        regexp: '^(;\s*)?{{ item.key }}\b'
+        line: "{{ item.key }} {{ item.value }}"
+        state: present
+        backup: yes
+
+      loop:
+        - { key: 'expose_php', value: 'off' }
+        - { key: 'allow_url_fopen', value: 'off' }

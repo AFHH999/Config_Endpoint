@@ -1,0 +1,20 @@
+- name: Install necessary packages
+  ansible.builtin.include_task: prerequisites.yaml
+
+- name: Configure ssh hardening
+  ansible.builtin.include_task: ssh.yaml
+
+- name: Hardening passwords
+  ansible.builtin.include_task: passwords.yaml
+
+- name: php configure
+  ansible.builtin.include_task: php.yaml
+
+- name: Set up AIDE
+  ansible.builtin.include_task: aide.yaml
+
+- name: Hardening kernel
+  ansible.builtin.include_task: kernel.yaml
+
+- name: Adding rules for auditd
+  ansible.builtin.include_task: auditd.yaml

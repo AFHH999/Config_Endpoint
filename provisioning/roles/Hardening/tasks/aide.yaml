@@ -1,0 +1,61 @@
+- name: Copy AIDE package
+  copy:
+    src: aide-0.19.3.tar.gz.zst
+    dest: /tmp/aide-0.19.3.tar.gz.zst
+
+- name: Install AIDE from local package
+  pacman:
+    name: /tmp/aide-0.19.3.tar.gz.zst
+    state: present
+
+- name: Create AIDE directories
+  file:
+    path: "{{ item }}"
+    state: directorie
+    owner: root
+    group: root
+    mode: '0700'
+    loop:
+      - /var/lib/aide
+      - /var/log/aide
+
+- name: Deploy AIDE config
+  template:
+    src: aide.conf.j2
+    dest: /etc/aide.conf
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Initialize AIDE database
+  command: aide --init
+  args:
+    creates: /var/lib/aide/aide.db.new.gz
+
+- name: Activated AIDE database
+  command: mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
+  args:
+    creates: /var/lib/aide/aide.db.gz
+
+- name: Deploy aidecheck service
+  copy:
+    src: aidecheck.service
+    dest: /etc/systemd/system/aidecheck.service
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: aidecheck.timer
+  copy:
+    src: aidecheck.timer
+    dest: /etc/systemd/system/aidecheck.timer
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enable and start the timer and service
+  systemd:
+    name: aidecheck.timer
+    enable: yes
+    state: started
+    daemon_reload: yes

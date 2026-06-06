@@ -7,3 +7,4 @@
     - base
     - desktop_env
     - security_tools
+    - hardening

@@ -18,6 +18,9 @@ security:
 check:
 	cd $(ANSIBLE_DIR) && ansible-playbook playbook.yaml --check --diff
 
+hardening:
+	cd $(ANSIBLE_DIR) && ansible-playbook playbook.yaml --tags hardening
+
 lint:
 	cd $(ANSIBLE_DIR) && ansible-lint playbook.yaml
 
