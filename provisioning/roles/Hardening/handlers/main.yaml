@@ -1,0 +1,9 @@
+- name: Restart auditd
+  ansible.builtin.systemd:
+    name: auditd
+    state: restarted
+
+- name: Restart sshd
+  ansible.builtin.systemd:
+    name: sshd
+    state: restarted

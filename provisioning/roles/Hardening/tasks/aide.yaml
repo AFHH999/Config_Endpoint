@@ -1,15 +1,18 @@
 - name: Copy AIDE package
-  copy:
+  ansible.builtin.copy:
     src: aide-0.19.3.tar.gz.zst
     dest: /tmp/aide-0.19.3.tar.gz.zst
+    mode: '0600'
+    owner: root
+    group: root
 
 - name: Install AIDE from local package
-  pacman:
+  community.general.pacman:
     name: /tmp/aide-0.19.3.tar.gz.zst
     state: present
 
 - name: Create AIDE directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directorie
     owner: root
@@ -20,7 +23,7 @@
       - /var/log/aide
 
 - name: Deploy AIDE config
-  template:
+  ansible.builtin.template:
     src: aide.conf.j2
     dest: /etc/aide.conf
     owner: root
@@ -28,25 +31,25 @@
     mode: '0600'
 
 - name: Initialize AIDE database
-  command: aide --init
+  ansible.builtin.command: aide --init
   args:
     creates: /var/lib/aide/aide.db.new.gz
 
 - name: Activated AIDE database
-  command: mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
+  ansible.builtin.command: mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
   args:
     creates: /var/lib/aide/aide.db.gz
 
 - name: Deploy aidecheck service
-  copy:
+  ansible.builtin.copy:
     src: aidecheck.service
     dest: /etc/systemd/system/aidecheck.service
     owner: root
     group: root
     mode: '0644'
 
-- name: aidecheck.timer
-  copy:
+- name: Aidecheck.timer
+  ansible.builtin.copy:
     src: aidecheck.timer
     dest: /etc/systemd/system/aidecheck.timer
     owner: root
@@ -54,8 +57,8 @@
     mode: '0644'
 
 - name: Enable and start the timer and service
-  systemd:
+  ansible.builtin.systemd:
     name: aidecheck.timer
-    enable: yes
+    enable: true
     state: started
-    daemon_reload: yes
+    daemon_reload: true

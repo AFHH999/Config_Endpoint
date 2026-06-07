@@ -1,38 +1,28 @@
-- name: Hardeninig_SSH
-  hosts: all
-  become: yes
+- name: SSH config
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^(#\s*)?{{ item.key }}\b'
+    line: "{{ item.key }} {{ item.value }}"
+    state: present
+    backup: true
+    validate: '/usr/bin/sshd -t -f %s'
+  loop:
+    - { key: 'PasswordAuthentication', value: 'no' }
+    - { key: 'PermitRootLogin', value: 'no' }
+    - { key: 'MaxAuthTries', value: '3' }
+    - { key: 'MaxSessions', value: '3' }
+    - { key: 'PubkeyAuthentication', value: 'yes' }
+    - { key: 'PermitEmptyPasswords', value: 'no' }
+    - { key: 'LogLevel', value: 'VERBOSE' }
+    - { key: 'ClientAliveCountMax', value: '3' }
+    - { key: 'AllowTcpForwarding', value: 'yes' }
+    - { key: 'TCPKeepAlive', value: 'yes' }
+    - { key: 'ClientAliveInterval', value: '300' }
+  notify: Restart sshd
 
-  tasks:
-    - name: SSH config
-      ansible.builtin.lineinfile:
-        path: /etc/ssh/sshd_config
-        regexp: '^(#\s*)?{{ item.key }}\b'
-        line: "{{ item.key }} {{ item.value }}"
-        state: present
-        backup: yes
-        validate: '/usr/bin/sshd -t -f %s'
-      loop:
-        - { key: 'PasswordAuthentication', value: 'no' }
-        - { key: 'PermitRootLogin', value: 'no' }
-        - { key: 'MaxAuthTries', value: '3' }
-        - { key: 'MaxSessions', value: '3' }
-        - { key: 'PubkeyAuthentication', value: 'yes' }
-        - { key: 'PermitEmptyPasswords', value: 'no' }
-        - { key: 'LogLevel', value: 'VERBOSE' }
-        - { key: 'ClientAliveCountMax', value: '3' }
-        - { key: 'AllowTcpForwarding', value: 'yes' }
-        - { key: 'TCPKeepAlive', value: 'yes' }
-        - { key: 'ClientAliveInterval', value: '300' }
-      notify: Restart sshd
-
-    - name: Restrict permisions on sshd
-      path: /etc/ssh/sshd_config 
-      owner: root
-      group: root
-      mode: '0600'
-
-  handlers:
-    - name: Restart sshd
-      ansible.builtin.systemd:
-        name: sshd
-        state: restarted
+- name: Restrict permisions on sshd
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: '0600'

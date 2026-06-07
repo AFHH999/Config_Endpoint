@@ -1,5 +1,5 @@
 - name: Provision Arch linux
-  hosts: local
+  hosts: all
 
   roles:
     - role: base
@@ -8,3 +8,5 @@
       tags: desktop
     - role: security_tools
       tags: security
+    - role: Hardening
+      tags: hardening

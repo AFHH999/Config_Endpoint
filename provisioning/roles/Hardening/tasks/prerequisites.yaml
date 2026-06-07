@@ -1,6 +1,6 @@
 - name: Update cache
   community.general.pacman:
-    update_cache:  true
+    update_cache: true
   become: true
   when: ansible_os_family == "Archlinux"
 

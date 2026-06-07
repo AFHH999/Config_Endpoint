@@ -1,5 +1,5 @@
 - name: Dissable unused network protocols
-  copy:
+  ansible.builtin.copy:
     dest: /etc/modprobe.d/disable-protocols.conf
     owner: root
     group: root
@@ -9,3 +9,20 @@
       install sctp /bin/false
       install rds /bin/false
       install tipc /bin/false
+
+- name: Disable unused kernel modules
+  ansible.builtin.copy:
+    dest: "/etc/modprobe.d/disable-{{ item.name }}.conf"
+    content: |
+      # Ansible managed: {{ item.reason }}
+      install {{ item.name }} /bin/false
+    owner: root
+    group: root
+    mode: '0644'
+  loop: "{{ modules_to_disable }}"
+
+- name: Unload modules if actives in memory
+  ansible.builtin.command: "modprobe -r {{ item.name }}"
+  loop: "{{ modules_to_disable }}"
+  failed_when: false
+  changed_when: false

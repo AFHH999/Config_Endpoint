@@ -3,8 +3,10 @@ hardening_required_packages:
   - arch-audit
   - rkhunter
 
-modules_to_disable:
+hardening_modules_to_disable:
   - name: hfs
+    reason: unused filesystem, reduces attack surface
   - name: hfsplus
+    reason: unused filesystem, reduces attack surface
   - name: firewire-core
-
+    reason: block physical DMA attack vector
