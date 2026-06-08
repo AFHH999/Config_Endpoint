@@ -1,6 +1,6 @@
 - name: Copy AIDE package
   ansible.builtin.copy:
-    src: aide-0.19.3.tar.gz.zst
+    src: aide-0.19.3.pkg.tar.zst
     dest: /tmp/aide-0.19.3.tar.gz.zst
     mode: '0600'
     owner: root
@@ -14,13 +14,13 @@
 - name: Create AIDE directories
   ansible.builtin.file:
     path: "{{ item }}"
-    state: directorie
+    state: directory
     owner: root
     group: root
     mode: '0700'
-    loop:
-      - /var/lib/aide
-      - /var/log/aide
+  loop:
+    - /var/lib/aide
+    - /var/log/aide
 
 - name: Deploy AIDE config
   ansible.builtin.template:
@@ -59,6 +59,6 @@
 - name: Enable and start the timer and service
   ansible.builtin.systemd:
     name: aidecheck.timer
-    enable: true
+    enabled: true
     state: started
     daemon_reload: true

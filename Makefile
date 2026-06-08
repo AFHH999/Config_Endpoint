@@ -1,6 +1,6 @@
 ANSIBLE_DIR = provisioning
-PLAYBOOK = $(ANSIBLE_DIR)/playbook.yaml
-INVENTORY = $(ANSIBLE_DIR)/inventory.ini
+PLAYBOOK = playbook.yaml
+INVENTORY = inventory.ini
 TARGET ?= daily_driver
 
 .PHONY: all base desktop security hardening check lint install-deps

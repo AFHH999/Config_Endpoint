@@ -16,13 +16,19 @@
 
 - name: Install Official packages
   community.general.pacman:
-    name: "{{ desktop_env_required_packages }}"
+    name: "{{ desktop_native_packages }}"
     state: present
   when: ansible_os_family == "Archlinux"
 
+- name: Install Official packages
+  community.general.pacman:
+    name: "{{ desktop_native_host_packages }}"
+    state: present
+  when: system_role == "daily_driver"
+
 - name: Check if yay is installed
   ansible.builtin.command: which yay
-  register: desktop_env_yay_check
+  register: desktop_yay_check
   ignore_errors: true
   changed_when: false
 
@@ -33,7 +39,7 @@
     version: master
   become: true
   become_user: aur_builder
-  when: desktop_env_yay_check.rc != 0
+  when: desktop_yay_check.rc != 0
 
 - name: Compile yay via makepkg
   ansible.builtin.command:
@@ -42,11 +48,20 @@
     creates: /usr/bin/yay
   become: true
   become_user: aur_builder
+  when: desktop_yay_check.rc != 0
 
 - name: Install AUR packages with yay
   kewlfft.aur.aur:
-    name: "{{ desktop_env_aur_packages }}"
+    name: "{{ desktop_aur_packages }}"
     use: yay
+    state: present
+  become: true
+  become_user: aur_builder
+
+- name: Install AUR packages daily_driver
+  when: system_role == 'daily_driver'
+  kewlfft.aur.aur:
+    name: "{{ desktop_aur_host_packages }}"
     state: present
   become: true
   become_user: aur_builder

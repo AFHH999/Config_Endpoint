@@ -1,0 +1,2 @@
+- name: Install necessary packages
+  ansible.builtin.include_tasks: prerequisites.yaml

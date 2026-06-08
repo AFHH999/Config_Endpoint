@@ -4,9 +4,9 @@
   roles:
     - role: base
       tags: base
-    - role: desktop_env
+    - role: desktop
       tags: desktop
     - role: security_tools
       tags: security
-    - role: Hardening
+    - role: hardening
       tags: hardening

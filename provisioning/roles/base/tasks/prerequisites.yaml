@@ -6,10 +6,17 @@
 
 - name: Install Official packages in Arch
   community.general.pacman:
-    name: "{{ required_packages }}"
+    name: "{{ base_required_packages }}"
     state: present
   become: true
   when: ansible_os_family == "Archlinux"
+
+- name: Install Official packages daily_driver
+  community.general.pacman:
+    name: "{{ base_host_only_packages }}"
+    state: present
+  become: true
+  when: system_role == "daily_driver"
 
 - name: Check if pynvim is installed
   ansible.builtin.command: pipx list

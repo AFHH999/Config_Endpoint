@@ -19,10 +19,10 @@
     owner: root
     group: root
     mode: '0644'
-  loop: "{{ modules_to_disable }}"
+  loop: "{{ hardening_modules_to_disable }}"
 
 - name: Unload modules if actives in memory
   ansible.builtin.command: "modprobe -r {{ item.name }}"
-  loop: "{{ modules_to_disable }}"
+  loop: "{{ hardening_modules_to_disable }}"
   failed_when: false
   changed_when: false

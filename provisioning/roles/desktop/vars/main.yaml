@@ -1,0 +1,42 @@
+desktop_native_packages: # OFFICIAL ARCH REPOSITORY PACKAGES
+  - hyprland
+  - hypridle
+  - hyprlock
+  - xdg-desktop-portal-hyprland
+  - waybar
+  - rofi
+  - swaync
+  - wlogout
+  - wallust
+  - pipewire
+  - wireplumber
+  - pipewire-pulse
+  - network-manager-applet
+  - brightnessctl
+  - wl-clipboard
+  - cliphist
+  - xdg-utils
+  - xdg-user-dirs
+  - thunar
+  - thunar-volman
+  - tumbler
+  - xarchiver
+  - ttf-jetbrains-mono-nerd
+  - ttf-fira-code
+  - python-pynvim
+
+# Official packages strictly restricted to your physical laptop hardware
+desktop_native_host_packages:
+  - supergfxctl
+  - blueman
+
+# ARCH USER REPOSITORY (AUR) PACKAGES (Requires compilation or AUR helper)
+desktop_aur_packages:
+  - hyprpolkitagent
+
+# AUR packages strictly restricted to your physical laptop hardware
+desktop_aur_host_packages:
+  - asusctl
+  - rog-control-center
+  - howdy-git
+  - linux-enable-ir-emitter

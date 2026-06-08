@@ -1,29 +1,37 @@
-base_required_packages:
-  - man-db
-  - man-pages
+base_required_packages: # Base CLI utilities required across both your physical PC and your VM
+  # --- System Documentation & Foundations ---
   - base
   - base-devel
-  - git
-  - wget
-  - btop
-  - ttf-jetbrains-mono-nerd
-  - python
-  - python-pipx
-  - nautilus
-  - neovim
-  - ghostty
-  - tmux
-  - jq
-  - zoxide
-  - pacman-contrib
-  - rofi
-  - atuin
-  - yazi
+  - man-db
+  - man-pages
+  - stow                    # Dotfile symlink management
+  - pacman-contrib          # Backend system update metrics
+
+  # --- Shell, Navigation & Terminal Rices ---
   - zsh
   - zsh-completions
-  - fzf
-  - bat
-  - fastfetch
-  - fd
-  - stow
-  - ansible-lint
+  - zsh-syntax-highlighting
+  - atuin                   # Shell history synchronization
+  - zoxide                  # Smart directory jumping
+  - fzf                     # Fuzzy selection utility
+  - bat                     # Syntax-highlighted cat replacement
+  - fd                      # Search alternative to find
+
+  # --- System Management & Core CLI Tools ---
+  - git
+  - wget
+  - jq                      # Command-line JSON formatting engine
+  - tmux
+  - neovim
+  - ghostty                 # Modern hardware-accelerated terminal emulator
+  - yazi                    # High-efficiency terminal file manager
+
+  # --- Languages & Quality Checks ---
+  - python
+  - python-pipx
+  - ansible-lint            # Strict automated infrastructure verification
+
+# Heavy metrics tools we only want running natively on your laptop hardware
+base_host_only_packages:
+  - btop                    # Interactive system resource visualization dashboard
+  - fastfetch               # System hardware configuration summary display
